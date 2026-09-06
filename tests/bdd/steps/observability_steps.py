@@ -1,8 +1,9 @@
 """Step definitions for observability BDD tests."""
 
-from app.main import app
 from behave import given, then, when
 from fastapi.testclient import TestClient
+
+from app.main import app
 
 
 @given("the tracer-bullet service is running")
@@ -17,7 +18,9 @@ def step_get_path(context, path):
 
 @then("the response status is {status:d}")
 def step_response_status(context, status):
-    assert context.response.status_code == status, f"Expected {status}, got {context.response.status_code}"
+    assert context.response.status_code == status, (
+        f"Expected {status}, got {context.response.status_code}"
+    )
 
 
 @then('the response body contains "{text}"')
@@ -42,11 +45,19 @@ def step_logs_contain(context, text):
 
     from app.main import logger
 
-    filters = [f for f in logger.filters if f.__class__.__name__ == "TraceContextFilter"]
+    filters = [
+        f for f in logger.filters if f.__class__.__name__ == "TraceContextFilter"
+    ]
     assert len(filters) > 0, "TraceContextFilter not found on logger"
     # The filter adds trace_id and span_id to every record
     record = logging.LogRecord(
-        name="test", level=logging.INFO, pathname="", lineno=0, msg="test", args=(), exc_info=None
+        name="test",
+        level=logging.INFO,
+        pathname="",
+        lineno=0,
+        msg="test",
+        args=(),
+        exc_info=None,
     )
     filters[0].filter(record)
     assert hasattr(record, "trace_id"), "trace_id not injected into log record"

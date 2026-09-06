@@ -115,7 +115,9 @@ async def track_metrics(request: Request, call_next: Callable) -> Response:
     response = await call_next(request)
 
     elapsed = time.perf_counter() - start
-    REQUEST_COUNT.labels(method=method, endpoint=path, status=response.status_code).inc()
+    REQUEST_COUNT.labels(
+        method=method, endpoint=path, status=response.status_code
+    ).inc()
     REQUEST_LATENCY.labels(method=method, endpoint=path).observe(elapsed)
     logger.info("%s %s %d %.3fs", method, path, response.status_code, elapsed)
     return response
@@ -156,4 +158,6 @@ async def demo_span() -> dict:
         span.add_event("processing started")
         await asyncio.sleep(0.01)  # Simulate work
         span.add_event("processing finished")
-    return {"trace_id": format(trace.get_current_span().get_span_context().trace_id, "032x")}
+    return {
+        "trace_id": format(trace.get_current_span().get_span_context().trace_id, "032x")
+    }
