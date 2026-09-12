@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
-@given("the tracer-bullet service is running")
+@given("the python-fawkes-path service is running")
 def step_service_running(context):
     context.client = TestClient(app)
 

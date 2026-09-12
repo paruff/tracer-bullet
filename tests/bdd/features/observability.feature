@@ -1,10 +1,10 @@
-Feature: Tracer Bullet Observability
+Feature: python-fawkes-path Observability
   As a platform engineer
-  I want to verify that the tracer-bullet service emits traces, metrics, and logs
+  I want to verify that the python-fawkes-path service emits traces, metrics, and logs
   So that the observability pipeline is validated end-to-end
 
   Background:
-    Given the tracer-bullet service is running
+    Given the python-fawkes-path service is running
 
   @unit @observability
   Scenario: Health endpoint returns success
@@ -36,5 +36,5 @@ Feature: Tracer Bullet Observability
   Scenario: Info endpoint returns service metadata
     When I GET "/info"
     Then the response status is 200
-    And the response body contains "tracer-bullet"
+    And the response body contains "python-fawkes-path"
     And the response body contains "version"

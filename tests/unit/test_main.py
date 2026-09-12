@@ -1,4 +1,4 @@
-"""Unit tests for tracer-bullet FastAPI service."""
+"""Unit tests for python-fawkes-path FastAPI service."""
 
 import pytest
 from fastapi.testclient import TestClient
@@ -13,7 +13,7 @@ def test_root():
     response = client.get("/")
     assert response.status_code == 200
     data = response.json()
-    assert data["message"] == "Hello from the tracer bullet!"
+    assert data["message"] == "Hello from the python-fawkes-path!"
     assert data["version"] == "0.1.6"
 
 
@@ -36,7 +36,7 @@ def test_info():
     response = client.get("/info")
     assert response.status_code == 200
     data = response.json()
-    assert data["service"] == "tracer-bullet"
+    assert data["service"] == "python-fawkes-path"
     assert data["version"] == "0.1.6"
 
 
