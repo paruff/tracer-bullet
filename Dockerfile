@@ -1,4 +1,4 @@
-# Multi-stage Docker build for tracer-bullet service
+# Multi-stage Docker build for python-fawkes-path service
 # =============================================================================
 
 # --- Build stage ---

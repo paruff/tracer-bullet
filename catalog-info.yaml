@@ -21,11 +21,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: tracer-bullet
+  name: python-fawkes-path
   description: Minimal hello-world FastAPI service validating the full deployment pipeline with OTEL tracing and Prometheus metrics
   annotations:
     github.com/project-slug: paruff/fawkes
-    argocd/app-name: tracer-bullet
+    argocd/app-name: python-fawkes-path
   tags:
     - python
     - fastapi

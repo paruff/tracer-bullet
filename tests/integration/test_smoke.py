@@ -1,13 +1,13 @@
-"""Integration tests for tracer-bullet - real HTTP calls against a running
+"""Integration tests for python-fawkes-path - real HTTP calls against a running
 instance (ephemeral PR-preview namespace, staging, or a local port-forward
 for development). Unlike tests/unit's in-process TestClient, these never
 mock the HTTP layer - the whole point is proving the deployed service
 actually answers over the network.
 
-Target is TRACER_BULLET_BASE_URL, not a hardcoded host, so the same suite
+Target is PYTHON_FAWKES_PATH_BASE_URL, not a hardcoded host, so the same suite
 runs unchanged against any environment. Defaults to a local port-forward
-(`kubectl port-forward svc/tracer-bullet 18000:80` then
-`TRACER_BULLET_BASE_URL=http://localhost:18000` - or omit the env var to
+(`kubectl port-forward svc/python-fawkes-path 18000:80` then
+`PYTHON_FAWKES_PATH_BASE_URL=http://localhost:18000` - or omit the env var to
 match this default directly).
 """
 
@@ -18,7 +18,7 @@ import urllib.request
 
 import pytest
 
-BASE_URL = os.environ.get("TRACER_BULLET_BASE_URL", "http://localhost:18000")
+BASE_URL = os.environ.get("PYTHON_FAWKES_PATH_BASE_URL", "http://localhost:18000")
 
 
 def _get(path: str) -> tuple[int, dict]:
@@ -34,7 +34,7 @@ def _get(path: str) -> tuple[int, dict]:
 def test_root_is_reachable():
     status, body = _get("/")
     assert status == 200
-    assert body["message"] == "Hello from the tracer bullet!"
+    assert body["message"] == "Hello from the python-fawkes-path!"
 
 
 @pytest.mark.integration

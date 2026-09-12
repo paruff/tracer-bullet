@@ -1,4 +1,4 @@
-"""Tracer Bullet — Hello World FastAPI service.
+"""python-fawkes-path — Hello World FastAPI service.
 
 Minimal service to validate the full deployment pipeline:
 code → Docker build → push → K8s manifest update → ArgoCD sync → running service.
@@ -29,7 +29,7 @@ from app import __version__
 # ---------------------------------------------------------------------------
 # OpenTelemetry setup
 # ---------------------------------------------------------------------------
-SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "tracer-bullet")
+SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "python-fawkes-path")
 DEPLOYMENT_ENV = os.getenv("DEPLOYMENT_ENVIRONMENT", "development")
 OTEL_ENDPOINT = os.getenv(
     "OTEL_EXPORTER_OTLP_ENDPOINT",
@@ -80,7 +80,7 @@ logger.addFilter(TraceContextFilter())
 # ---------------------------------------------------------------------------
 # FastAPI app
 # ---------------------------------------------------------------------------
-app = FastAPI(title="tracer-bullet", version=__version__)
+app = FastAPI(title="python-fawkes-path", version=__version__)
 
 # Auto-instrument FastAPI (creates spans for every request)
 FastAPIInstrumentor.instrument_app(app)
@@ -128,7 +128,7 @@ async def track_metrics(request: Request, call_next: Callable) -> Response:
 # ---------------------------------------------------------------------------
 @app.get("/")
 async def root() -> dict:
-    return {"message": "Hello from the tracer bullet!", "version": __version__}
+    return {"message": "Hello from the python-fawkes-path!", "version": __version__}
 
 
 @app.get("/health")
@@ -144,7 +144,7 @@ async def ready() -> dict:
 @app.get("/info")
 async def info() -> dict:
     return {
-        "service": "tracer-bullet",
+        "service": "python-fawkes-path",
         "version": __version__,
         "description": "Minimal service to validate the Fawkes deployment pipeline",
     }
@@ -154,7 +154,7 @@ async def info() -> dict:
 async def demo_span() -> dict:
     """Create a custom child span to demonstrate OTEL tracing."""
     with tracer.start_as_current_span("demo-work") as span:
-        span.set_attribute("demo.key", "hello-tracer-bullet")
+        span.set_attribute("demo.key", "hello-python-fawkes-path")
         span.add_event("processing started")
         await asyncio.sleep(0.01)  # Simulate work
         span.add_event("processing finished")
